@@ -10,9 +10,11 @@ namespace WebBookingAPI.Controllers
     public class HomeController : ControllerBase
     {
         private readonly ApiContext _context;
-        public HomeController(ApiContext context)
+        private readonly ILogger _fileLogger;
+        public HomeController(ApiContext context, ILogger logger)
         {
             _context = context;
+            _fileLogger = logger;
         }
 
         // Create/Edit
@@ -39,6 +41,8 @@ namespace WebBookingAPI.Controllers
 
             _context.SaveChanges();
 
+            _fileLogger.Log("CreateEdit called in HomeController");
+
             return new JsonResult(Ok(book));
         }
 
@@ -51,6 +55,8 @@ namespace WebBookingAPI.Controllers
 
             if (result == null)
                 return new JsonResult(NotFound());
+
+            _fileLogger.Log("Get called in HomeController");
 
             return new JsonResult(Ok(result));
         }
@@ -69,6 +75,8 @@ namespace WebBookingAPI.Controllers
 
             SaveChanges("Delete");
 
+            _fileLogger.Log("Delete called in HomeController");
+
             return new JsonResult(NoContent());
         }
 
@@ -78,7 +86,8 @@ namespace WebBookingAPI.Controllers
         {
             var result = _context.Books.ToList();
 
-           
+
+            _fileLogger.Log("Get All called in HomeController");
 
             return new JsonResult(result);
         }
@@ -88,14 +97,20 @@ namespace WebBookingAPI.Controllers
         public JsonResult GetAllChanges()
         {
             var result = _context.Changes.ToList();
+
+            _fileLogger.Log("Get All Changes called in HomeController");
+
             return new JsonResult(result);
         }
 
         // Get all changes
-        [HttpGet("/GetAllChangesByID")]
-        public JsonResult GetAllChangesByID(int id)
+        [HttpGet("/GetChangesByID")]
+        public JsonResult GetChangesByID(int id)
         {
             var result = _context.Changes.Find(id);
+
+            _fileLogger.Log("Get Al lChanges ByI D called in HomeController");
+
             return new JsonResult(result);
         }
 
@@ -104,11 +119,11 @@ namespace WebBookingAPI.Controllers
         private void SaveChanges(string actionName)
         {
            var change = new Changes();
-           change.Id = _context.Changes.ToList().Count + 1;
+           change.Id = _context.Changes !=null ? _context.Changes.ToList().Count + 1 : 1;
            change.ActionName = actionName;
            change.TimeStamp = DateTime.Now;
 
-            _context.Changes.Add(change);
+            _context.Changes?.Add(change);
         }
     }
 }
