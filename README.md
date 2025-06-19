@@ -1,17 +1,15 @@
-This is a test application that provides several API endpoints.
+# Test API Application
 
-Prerequisites
-Visual Studio 2019 or a later version
+This is a test application that provides several API endpoints for demonstration and testing purposes.
 
-IIS Express (usually included with Visual Studio)
+## Prerequisites
 
-.NET SDK (compatible with the project)
+- [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) or later
+- IIS Express (included with Visual Studio)
+- [.NET SDK](https://dotnet.microsoft.com/download) compatible with the project
 
-How to Run
-Download or clone the project repository.
+## Getting Started
 
-Open the project using Visual Studio 2019 or a newer version.
-
-Run the application (IIS Express should start automatically).
-
-Once the application is running, a Swagger page will open in your browser. This page lists all available API endpoints and allows you to test them directly.
+1. **Clone or download** the repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
